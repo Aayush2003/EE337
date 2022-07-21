@@ -1,0 +1,303 @@
+A51 MACRO ASSEMBLER  SPEAKER                                                              03/05/2022 13:55:29 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\speaker.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE speaker.asm SET(SMALL) DEBUG PRINT(.\Listings\speaker.lst) OBJECT(.\Obj
+                      ects\speaker.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0031                 1     num equ 49d
+                       2     
+0000                   3     org 0000h
+0000 020236            4     ljmp main
+                       5     
+                       6     
+0100                   7     org 0100h
+                       8             
+0100                   9     delay_200ms:
+0100 C000             10             push 00h
+0102 78C8             11             mov r0, #200
+0104 3116             12             h4: acall delay_1ms
+0106 D8FC             13             djnz r0, h4
+0108 D000             14             pop 00h
+010A 22               15             ret
+                      16             
+010B                  17     delay_100ms:
+010B C000             18             push 00h
+010D 7864             19             mov r0, #100
+010F 3116             20             h3: acall delay_1ms
+0111 D8FC             21             djnz r0, h3
+0113 D000             22             pop 00h
+0115 22               23             ret
+                      24     
+0116                  25     delay_1ms:
+0116 C000             26             push 00h
+0118 7804             27             mov r0, #4
+011A 3121             28             h2: acall delay_250us
+011C D8FC             29             djnz r0, h2
+011E D000             30             pop 00h
+0120 22               31             ret
+                      32     
+0121                  33     delay_250us:
+0121 C000             34             push 00h
+0123 78F4             35             mov r0, #244
+0125 D8FE             36             h1: djnz r0, h1
+0127 D000             37             pop 00h
+0129 22               38             ret
+                      39             
+012A                  40     load_t1:
+012A 7431             41     mov a, #num
+012C 758DB1           42     mov th1,#0b1h
+012F 758BE0           43     mov tl1,#0e0h
+0132 D28E             44     setb tr1
+0134 22               45     ret
+                      46             
+0135                  47     reload_t1:
+0135 14               48     dec a
+0136 C28F             49     clr tf1
+0138 758DB1           50     mov th1,#0b1h
+013B 758BE0           51     mov tl1,#0e0h
+013E D28E             52     setb tr1
+0140 22               53     ret
+                      54     
+                      55     
+0141                  56     note_sa:
+0141 12012A           57     lcall load_t1
+A51 MACRO ASSEMBLER  SPEAKER                                                              03/05/2022 13:55:29 PAGE     2
+
+0144                  58     main_sa:
+0144 758AB9           59     mov tl0, #0b9h
+0147 758CEF           60     mov th0, #0efh
+014A D28C             61     setb tr0
+014C                  62     loop_sa:
+014C 308DFD           63     jnb tf0, loop_sa
+014F C28D             64     clr tf0
+0151 C28C             65     clr tr0
+0153 B280             66     cpl p0.0
+0155 308F03           67     jnb tf1, skip_sa
+0158 120135           68     lcall reload_t1
+015B                  69     skip_sa:
+015B 70E7             70     jnz main_sa
+015D 758000           71     mov p0, #00h
+0160 12010B           72     lcall delay_100ms
+0163 22               73     ret
+                      74     
+0164                  75     note_re:
+0164 12012A           76     lcall load_t1
+0167                  77     main_re:
+0167 758A88           78     mov tl0, #088h
+016A 758CF1           79     mov th0, #0f1h
+016D D28C             80     setb tr0
+016F                  81     loop_re:
+016F 308DFD           82     jnb tf0, loop_re
+0172 C28D             83     clr tf0
+0174 C28C             84     clr tr0
+0176 B280             85     cpl p0.0
+0178 308F03           86     jnb tf1, skip_re
+017B 120135           87     lcall reload_t1
+017E                  88     skip_re:
+017E 70E7             89     jnz main_re
+0180 758000           90     mov p0, #00h
+0183 12010B           91     lcall delay_100ms
+0186 22               92     ret
+                      93     
+0187                  94     note_ga:
+0187 12012A           95     lcall load_t1
+018A                  96     main_ga:
+018A 758AFA           97     mov tl0, #0fah
+018D 758CF2           98     mov th0, #0f2h
+0190 D28C             99     setb tr0
+0192                 100     loop_ga:
+0192 308DFD          101     jnb tf0, loop_ga
+0195 C28D            102     clr tf0
+0197 C28C            103     clr tr0
+0199 B280            104     cpl p0.0
+019B 308F03          105     jnb tf1, skip_ga
+019E 120135          106     lcall reload_t1
+01A1                 107     skip_ga:
+01A1 70E7            108     jnz main_ga
+01A3 758000          109     mov p0, #00h
+01A6 12010B          110     lcall delay_100ms
+01A9 22              111     ret
+                     112     
+01AA                 113     note_ma:
+01AA 12012A          114     lcall load_t1
+01AD                 115     main_ma:
+01AD 758ACB          116     mov tl0, #0cbh
+01B0 758CF3          117     mov th0, #0f3h
+01B3 D28C            118     setb tr0
+01B5                 119     loop_ma:
+01B5 308DFD          120     jnb tf0, loop_ma
+01B8 C28D            121     clr tf0
+01BA C28C            122     clr tr0
+01BC B280            123     cpl p0.0
+A51 MACRO ASSEMBLER  SPEAKER                                                              03/05/2022 13:55:29 PAGE     3
+
+01BE 308F03          124     jnb tf1, skip_ma
+01C1 120135          125     lcall reload_t1
+01C4                 126     skip_ma:
+01C4 70E7            127     jnz main_ma
+01C6 758000          128     mov p0, #00h
+01C9 12010B          129     lcall delay_100ms
+01CC 22              130     ret
+                     131     
+01CD                 132     note_pa:
+01CD 12012A          133     lcall load_t1
+01D0                 134     main_pa:
+01D0 758A26          135     mov tl0, #026h
+01D3 758CF5          136     mov th0, #0f5h
+01D6 D28C            137     setb tr0
+01D8                 138     loop_pa:
+01D8 308DFD          139     jnb tf0, loop_pa
+01DB C28D            140     clr tf0
+01DD C28C            141     clr tr0
+01DF B280            142     cpl p0.0
+01E1 308F03          143     jnb tf1, skip_pa
+01E4 120135          144     lcall reload_t1
+01E7                 145     skip_pa:
+01E7 70E7            146     jnz main_pa
+01E9 758000          147     mov p0, #00h
+01EC 12010B          148     lcall delay_100ms
+01EF 22              149     ret
+                     150     
+01F0                 151     note_da:
+01F0 12012A          152     lcall load_t1
+01F3                 153     main_da:
+01F3 758A3C          154     mov tl0, #03ch
+01F6 758CF6          155     mov th0, #0f6h
+01F9 D28C            156     setb tr0
+01FB                 157     loop_da:
+01FB 308DFD          158     jnb tf0, loop_da
+01FE C28D            159     clr tf0
+0200 C28C            160     clr tr0
+0202 B280            161     cpl p0.0
+0204 308F03          162     jnb tf1, skip_da
+0207 120135          163     lcall reload_t1
+020A                 164     skip_da:
+020A 70E7            165     jnz main_da
+020C 758000          166     mov p0, #00h
+020F 12010B          167     lcall delay_100ms
+0212 22              168     ret
+                     169     
+0213                 170     note_ni:
+0213 12012A          171     lcall load_t1
+0216                 172     main_ni:
+0216 758A52          173     mov tl0, #052h
+0219 758CF7          174     mov th0, #0f7h
+021C D28C            175     setb tr0
+021E                 176     loop_ni:
+021E 308DFD          177     jnb tf0, loop_ni
+0221 C28D            178     clr tf0
+0223 C28C            179     clr tr0
+0225 B280            180     cpl p0.0
+0227 308F03          181     jnb tf1, skip_ni
+022A 120135          182     lcall reload_t1
+022D                 183     skip_ni:
+022D 70E7            184     jnz main_ni
+022F 758000          185     mov p0, #00h
+0232 12010B          186     lcall delay_100ms
+0235 22              187     ret
+                     188     
+0236                 189     main:
+A51 MACRO ASSEMBLER  SPEAKER                                                              03/05/2022 13:55:29 PAGE     4
+
+0236 758000          190     mov p0, #00h
+0239 758911          191     mov tmod, #11h
+023C                 192     song_loop:
+023C 120141          193     lcall note_sa
+023F 120141          194     lcall note_sa
+0242 120164          195     lcall note_re
+0245 120141          196     lcall note_sa
+0248 1201AA          197     lcall note_ma
+024B 120187          198     lcall note_ga
+024E 120141          199     lcall note_sa
+0251 120141          200     lcall note_sa
+0254 120164          201     lcall note_re
+0257 120141          202     lcall note_sa
+025A 1201CD          203     lcall note_pa
+025D 1201AA          204     lcall note_ma
+0260 120141          205     lcall note_sa
+0263 120141          206     lcall note_sa
+0266 1201F0          207     lcall note_da
+0269 1201CD          208     lcall note_pa
+026C 1201AA          209     lcall note_ma
+026F 120187          210     lcall note_ga
+0272 120164          211     lcall note_re
+0275 1201F0          212     lcall note_da
+0278 1201F0          213     lcall note_da
+027B 1201CD          214     lcall note_pa
+027E 1201AA          215     lcall note_ma
+0281 1201CD          216     lcall note_pa
+0284 1201AA          217     lcall note_ma
+0287 120100          218     lcall delay_200ms
+028A 02023C          219     ljmp song_loop
+028D 80FE            220     here: sjmp here
+                     221     end
+A51 MACRO ASSEMBLER  SPEAKER                                                              03/05/2022 13:55:29 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY_100MS. . . .  C ADDR   010BH   A   
+DELAY_1MS. . . . .  C ADDR   0116H   A   
+DELAY_200MS. . . .  C ADDR   0100H   A   
+DELAY_250US. . . .  C ADDR   0121H   A   
+H1 . . . . . . . .  C ADDR   0125H   A   
+H2 . . . . . . . .  C ADDR   011AH   A   
+H3 . . . . . . . .  C ADDR   010FH   A   
+H4 . . . . . . . .  C ADDR   0104H   A   
+HERE . . . . . . .  C ADDR   028DH   A   
+LOAD_T1. . . . . .  C ADDR   012AH   A   
+LOOP_DA. . . . . .  C ADDR   01FBH   A   
+LOOP_GA. . . . . .  C ADDR   0192H   A   
+LOOP_MA. . . . . .  C ADDR   01B5H   A   
+LOOP_NI. . . . . .  C ADDR   021EH   A   
+LOOP_PA. . . . . .  C ADDR   01D8H   A   
+LOOP_RE. . . . . .  C ADDR   016FH   A   
+LOOP_SA. . . . . .  C ADDR   014CH   A   
+MAIN . . . . . . .  C ADDR   0236H   A   
+MAIN_DA. . . . . .  C ADDR   01F3H   A   
+MAIN_GA. . . . . .  C ADDR   018AH   A   
+MAIN_MA. . . . . .  C ADDR   01ADH   A   
+MAIN_NI. . . . . .  C ADDR   0216H   A   
+MAIN_PA. . . . . .  C ADDR   01D0H   A   
+MAIN_RE. . . . . .  C ADDR   0167H   A   
+MAIN_SA. . . . . .  C ADDR   0144H   A   
+NOTE_DA. . . . . .  C ADDR   01F0H   A   
+NOTE_GA. . . . . .  C ADDR   0187H   A   
+NOTE_MA. . . . . .  C ADDR   01AAH   A   
+NOTE_NI. . . . . .  C ADDR   0213H   A   
+NOTE_PA. . . . . .  C ADDR   01CDH   A   
+NOTE_RE. . . . . .  C ADDR   0164H   A   
+NOTE_SA. . . . . .  C ADDR   0141H   A   
+NUM. . . . . . . .  N NUMB   0031H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+RELOAD_T1. . . . .  C ADDR   0135H   A   
+SKIP_DA. . . . . .  C ADDR   020AH   A   
+SKIP_GA. . . . . .  C ADDR   01A1H   A   
+SKIP_MA. . . . . .  C ADDR   01C4H   A   
+SKIP_NI. . . . . .  C ADDR   022DH   A   
+SKIP_PA. . . . . .  C ADDR   01E7H   A   
+SKIP_RE. . . . . .  C ADDR   017EH   A   
+SKIP_SA. . . . . .  C ADDR   015BH   A   
+SONG_LOOP. . . . .  C ADDR   023CH   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TF1. . . . . . . .  B ADDR   0088H.7 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

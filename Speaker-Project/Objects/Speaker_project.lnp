@@ -1,0 +1,3 @@
+".\Objects\speaker.obj" 
+TO ".\Objects\Speaker_project" 
+PRINT(".\Listings\Speaker_project.m51") RAMSIZE(256) 
